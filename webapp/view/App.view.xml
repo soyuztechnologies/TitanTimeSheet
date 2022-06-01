@@ -1,0 +1,13 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f" xmlns="sap.m" controllerName="ui.ts.timesheetTimesheet.controller.App"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<!--<App>-->
+	<!--	<pages>-->
+	<!--		<Page title="Title">-->
+	<!--			<content></content>-->
+	<!--		</Page>-->
+	<!--	</pages>-->
+	<!--</App>-->
+	<App id="App">
+        <f:FlexibleColumnLayout id="layout" layout="{layout>/layout}"></f:FlexibleColumnLayout>
+    </App>
+</mvc:View>

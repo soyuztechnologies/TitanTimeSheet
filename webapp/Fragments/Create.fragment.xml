@@ -1,0 +1,20 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:form="sap.ui.layout.form">
+    <Dialog draggable="false" title="Create Resource" resizable="false" contentHeight="70%" contentWidth="60%">
+        <form:SimpleForm editable="true">
+        	<Label text="Resource" design="Bold"/>
+            <Input width="40%"></Input>
+        	<Label text="Weekend" design="Bold"/>
+            <Input width="40%"></Input>
+            <Label text="Status" design="Bold"/>
+            <Input width="40%"></Input>
+            <Label text="Hrs" design="Bold"/>
+            <Input width="40%"></Input>
+        </form:SimpleForm>
+        <beginButton>
+        	<Button press="onSave" text="Save" type="Emphasized"></Button>
+        </beginButton>
+        <endButton>
+            <Button press="onCancel" text="Cancel" type="Emphasized"></Button>
+        </endButton>
+    </Dialog>
+</c:FragmentDefinition>
