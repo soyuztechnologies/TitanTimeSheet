@@ -1,0 +1,33 @@
+<mvc:View
+	controllerName="ui.ts.timesheetTimesheet.controller.ProjectView"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	displayBlock="true"
+	height="100%"
+	busyIndicatorDelay="0"
+>
+<Page>
+   <customHeader>
+   	<Bar>
+   		<contentLeft>
+   			<Title text="Projects"></Title>
+   		</contentLeft>
+   	</Bar>
+   </customHeader>
+   <List
+		items="{/ProjectHelpSet}" mode="SingleSelectMaster"  select="onSelectProject">
+		<CustomListItem  press="onSelectProject" type="Active">
+				<HBox>
+				<!--<CheckBox select="onSelectProject"></CheckBox>-->
+	            
+				<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+					<Title text="{Project}" />
+					<Text text="{Name}"/>
+					<Label text="{Prjtype}"/>
+					<Label text="{Imptype}"/>
+				</VBox>
+			</HBox>
+		</CustomListItem>
+	</List>
+</Page>
+</mvc:View>

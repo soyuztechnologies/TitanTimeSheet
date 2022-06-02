@@ -1,124 +1,130 @@
-<mvc:View controllerName="ui.ts.timesheetTimesheet.controller.DetailPopupView" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:fb="sap.ui.comp.filterbar"
-	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core">
+<mvc:View controllerName="ui.ts.timesheetTimesheet.controller.DetailPopupView" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core">
 	<Page title="Detail View">
-      <headerContent>
-			<Button icon="sap-icon://save" tooltip="Save" text="Save"/>
-			<Button icon="sap-icon://system-exit" tooltip="Exit" text="Exit"/>
-			<Button icon="sap-icon://edit" tooltip="Edit" text="Edit" />
+		<headerContent>
+			<Button tooltip="Save" text="Save" type="Emphasized" visible="{local>/savevisible}" press="onPressSave"/>
+			<Button tooltip="Edit" text="Edit" type="Emphasized" visible="{local>/editVisible}" press="onPressEdit"/>
+			<Button tooltip="Exit" text="Exit" type="Emphasized"/>
 		</headerContent>
 		<!--<f:GridList id="gridList" headerText="Week Days" items="{/RescDaySet}">-->
-			<f:GridList id="gridList" headerText="Week Days">
+		<f:GridList id="gridList" headerText="Week Days">
 			<CustomListItem>
 				<VBox height="100%">
 					<VBox class="sapUiSmallMargin">
 						<layoutData>
-							<FlexItemData growFactor="1" shrinkFactor="0" />
+							<FlexItemData growFactor="1" shrinkFactor="0"/>
 						</layoutData>
-						<Title text="Mon" wrapping="true" />
-						<Label text="{TsDate}" wrapping="true" />
-						<HBox>
-							<ObjectAttribute title="Regular Pay (8 Hours)" />
-						    <core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin"/>
-						</HBox>
-						<Button text="Add Time" icon="sap-icon://add"/>
-					</VBox>
-				</VBox>	
-			</CustomListItem>
-			<CustomListItem>
-				<VBox height="100%">
-					<VBox class="sapUiSmallMargin">
-						<layoutData>
-							<FlexItemData growFactor="1" shrinkFactor="0" />
-						</layoutData>
-						<Title text="Tue" wrapping="true" />
-						<Label text="{TsDate}" wrapping="true" />
-						<HBox>
-							<ObjectAttribute title="Regular Pay (8 Hours)" />
-						    <core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin"/>
-						</HBox>
-						<Button text="Add Time" icon="sap-icon://add"/>
-					</VBox>
-				</VBox>	
-			</CustomListItem>
-			<CustomListItem>
-				<VBox height="100%">
-					<VBox class="sapUiSmallMargin">
-						<layoutData>
-							<FlexItemData growFactor="1" shrinkFactor="0" />
-						</layoutData>
-						<Title text="Wed" wrapping="true" />
-						<Label text="{TsDate}" wrapping="true" />
-						<HBox>
-							<ObjectAttribute title="Regular Pay (8 Hours)" />
-						    <core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin"/>
-						</HBox>
-						<Button text="Add Time" icon="sap-icon://add"/>
-					</VBox>
-				</VBox>	
-			</CustomListItem>
-			<CustomListItem>
-				<VBox height="100%">
-					<VBox class="sapUiSmallMargin">
-						<layoutData>
-							<FlexItemData growFactor="1" shrinkFactor="0" />
-						</layoutData>
-						<Title text="Thur" wrapping="true" />
-						<Label text="{TsDate}" wrapping="true" />
-						<HBox>
-							<ObjectAttribute title="Regular Pay (8 Hours)" />
-						    <core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin"/>
-						</HBox>
-						<Button text="Add Time" icon="sap-icon://add"/>
-					</VBox>
-				</VBox>	
-			</CustomListItem>
-			<CustomListItem>
-				<VBox height="100%">
-					<VBox class="sapUiSmallMargin">
-						<layoutData>
-							<FlexItemData growFactor="1" shrinkFactor="0" />
-						</layoutData>
-						<Title text="Fri" wrapping="true" />
-						<Label text="{TsDate}" wrapping="true" />
-						<HBox>
-							<ObjectAttribute title="Regular Pay (8 Hours)" />
-						    <core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin"/>
-						</HBox>
-						<Button text="Add Time" icon="sap-icon://add"/>
-					</VBox>
-				</VBox>	
-			</CustomListItem>
-			<CustomListItem>
-				<VBox height="100%" >
-					<VBox class="sapUiSmallMargin">
-						<layoutData>
-							<FlexItemData growFactor="1" shrinkFactor="0" />
-						</layoutData>
-						<Title text="Sat" wrapping="true" />
-						<Label text="{TsDate}" wrapping="true" />
+						<Title text="Mon" wrapping="true"/>
+						<Label text="{TsDate}" wrapping="true"/>
+						<VBox>
 							<HBox>
-							<ObjectAttribute title="Regular Pay (8 Hours)" />
-						    <core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin"/>
-						</HBox>
-						<Button text="Add Time" icon="sap-icon://add"/>
+								<ObjectAttribute title="Regular Pay (8 Hours)"/>
+								<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" enabled="{local>/enabled}"/>
+							</HBox>
+							<HBox>
+								<ObjectAttribute title="Regular Pay (8 Hours)"/>
+								<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin"/>
+							</HBox>
+						</VBox>
+						<Button text="Add Time" icon="sap-icon://add" press="onAddTime" enabled="{local>/enabled}"/>
 					</VBox>
-				</VBox>	
+				</VBox>
 			</CustomListItem>
 			<CustomListItem>
 				<VBox height="100%">
 					<VBox class="sapUiSmallMargin">
 						<layoutData>
-							<FlexItemData growFactor="1" shrinkFactor="0" />
+							<FlexItemData growFactor="1" shrinkFactor="0"/>
 						</layoutData>
-						<Title text="Sun" wrapping="true" />
-						<Label text="{TsDate}" wrapping="true" />
-							<HBox>
-							<ObjectAttribute title="Regular Pay (8 Hours)" />
-						    <core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin"/>
+						<Title text="Tue" wrapping="true"/>
+						<Label text="{TsDate}" wrapping="true"/>
+						<HBox>
+							<ObjectAttribute title="Regular Pay (8 Hours)"/>
+							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" enabled="{local>/enabled}"/>
 						</HBox>
-						<Button text="Add Time" icon="sap-icon://add"/>
+						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
 					</VBox>
-				</VBox>	
+				</VBox>
+			</CustomListItem>
+			<CustomListItem>
+				<VBox height="100%">
+					<VBox class="sapUiSmallMargin">
+						<layoutData>
+							<FlexItemData growFactor="1" shrinkFactor="0"/>
+						</layoutData>
+						<Title text="Wed" wrapping="true"/>
+						<Label text="{TsDate}" wrapping="true"/>
+						<HBox>
+							<ObjectAttribute title="Regular Pay (8 Hours)"/>
+							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" enabled="{local>/enabled}"/>
+						</HBox>
+						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
+					</VBox>
+				</VBox>
+			</CustomListItem>
+			<CustomListItem>
+				<VBox height="100%">
+					<VBox class="sapUiSmallMargin">
+						<layoutData>
+							<FlexItemData growFactor="1" shrinkFactor="0"/>
+						</layoutData>
+						<Title text="Thur" wrapping="true"/>
+						<Label text="{TsDate}" wrapping="true"/>
+						<HBox>
+							<ObjectAttribute title="Regular Pay (8 Hours)"/>
+							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" enabled="{local>/enabled}"/>
+						</HBox>
+						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
+					</VBox>
+				</VBox>
+			</CustomListItem>
+			<CustomListItem>
+				<VBox height="100%">
+					<VBox class="sapUiSmallMargin">
+						<layoutData>
+							<FlexItemData growFactor="1" shrinkFactor="0"/>
+						</layoutData>
+						<Title text="Fri" wrapping="true"/>
+						<Label text="{TsDate}" wrapping="true"/>
+						<HBox>
+							<ObjectAttribute title="Regular Pay (8 Hours)"/>
+							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" enabled="{local>/enabled}"/>
+						</HBox>
+						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
+					</VBox>
+				</VBox>
+			</CustomListItem>
+			<CustomListItem>
+				<VBox height="100%">
+					<VBox class="sapUiSmallMargin">
+						<layoutData>
+							<FlexItemData growFactor="1" shrinkFactor="0"/>
+						</layoutData>
+						<Title text="Sat" wrapping="true"/>
+						<Label text="{TsDate}" wrapping="true"/>
+						<HBox>
+							<ObjectAttribute title="Regular Pay (8 Hours)"/>
+							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" enabled="{local>/enabled}"/>
+						</HBox>
+						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
+					</VBox>
+				</VBox>
+			</CustomListItem>
+			<CustomListItem>
+				<VBox height="100%">
+					<VBox class="sapUiSmallMargin">
+						<layoutData>
+							<FlexItemData growFactor="1" shrinkFactor="0"/>
+						</layoutData>
+						<Title text="Sun" wrapping="true"/>
+						<Label text="{TsDate}" wrapping="true"/>
+						<HBox>
+							<ObjectAttribute title="Regular Pay (8 Hours)"/>
+							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" enabled="{local>/enabled}"/>
+						</HBox>
+						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
+					</VBox>
+				</VBox>
 			</CustomListItem>
 		</f:GridList>
 	</Page>

@@ -72,9 +72,13 @@
 				"target": "TimeSheetList"
 			},
 			{
-				"name": "detailView",
+				"name": "projectView",
 				"pattern": "details/{weeknum}/{Resc}",
-				"target": "DetailPopupView"
+				"target": ["ProjectView"]
+			},	{
+				"name": "detailView",
+				"pattern": "details/{weeknum}/{Resc}/{project}",
+				"target": ["ProjectView","DetailPopupView"]
 			}],
 			"targets": {
 				"TimeSheetList": {
@@ -85,9 +89,15 @@
 				},
 				"DetailPopupView": {
 					"viewLevel": 0,
-					"controlAggregation": "beginColumnPages",
+					"controlAggregation": "midColumnPages",
 					"viewId": "idDetailPopuptView",
 					"viewName": "DetailPopupView"
+				},
+				"ProjectView": {
+					"viewLevel": 0,
+					 "controlAggregation": "beginColumnPages",
+					"viewId": "idProjectView",
+					"viewName": "ProjectView"
 				}
 			}
 		},

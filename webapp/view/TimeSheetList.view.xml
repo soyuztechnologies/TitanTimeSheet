@@ -12,12 +12,12 @@ xmlns:uxap="sap.uxap"
 	                <fb:FilterGroupItem id="_IDGenFilterGroupItem2" groupName="Id2"  name="A" label="Week" visibleInFilterBar="true" partOfCurrentVariant="true">
 	                    <fb:control>
 	                        <!--<Input id="input2" type="Text" showValueHelp="true" valueHelpRequest="handleValueHelpWeek" ></Input>-->
-	                        <Input id="input2" type="Text"  maxLength='6'></Input>
+	                        <Input id="input2" type="Text"  maxLength='6' liveChange="onFilterWeeknumber"></Input>
 	                    </fb:control>
 	                </fb:FilterGroupItem>
                </fb:filterGroupItems>
         </fb:FilterBar>
-	    	<Table items='{path:"/WeeklyTSSet"}' >
+	    	<Table items='{path:"/WeeklyTSSet"}' id="tabId">
 		    	<columns>
 	                <Column demandPopin="true" minScreenWidth="Tablet">
 	                    <Text text="Resource" />

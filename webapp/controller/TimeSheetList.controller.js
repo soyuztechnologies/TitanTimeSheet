@@ -1,7 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"sap/m/MessageToast"
-], function(Controller, MessageToast) {
+	"sap/m/MessageToast",
+	"sap/ui/model/Filter",
+    'sap/ui/model/FilterOperator'
+], function(Controller, MessageToast,Filter,FilterOperator) {
 	"use strict";
 
 	return Controller.extend("ui.ts.timesheetTimesheet.controller.TimeSheetList", {
@@ -57,17 +59,21 @@ sap.ui.define([
 		},
 		onPressWeeknumber : function(oEvent){
 			// debugger;
-			this.getDetailDailog().open();
+			// this.getDetailDailog().open();
 			this.oWeekNum = oEvent.getSource().getProperty("text");
 		    this.oResc = oEvent.getSource().getParent().getBindingContext().getObject().Resc;	
+		    	this._oRouter.navTo("projectView",{
+				weeknum : this.oWeekNum,
+				Resc : this.oResc
+			});
 		},
-		getDetailDailog:function(){
-			if (!this.oDetailDialog) {
-                    this.oDetailDialog = sap.ui.xmlfragment(this.getView().getId(), "ui.ts.timesheetTimesheet.Fragments.DetailPopup", this);
-                    this.getView().addDependent(this.oDetailDialog);
-                }
-                return this.oDetailDialog;
-		},
+		// getDetailDailog:function(){
+		// 	if (!this.oDetailDialog) {
+  //                  this.oDetailDialog = sap.ui.xmlfragment(this.getView().getId(), "ui.ts.timesheetTimesheet.Fragments.DetailPopup", this);
+  //                  this.getView().addDependent(this.oDetailDialog);
+  //              }
+  //              return this.oDetailDialog;
+		// },
 		getDialog: function () {
                 if (!this.oCreateDialog) {
                     this.oCreateDialog = sap.ui.xmlfragment(this.getView().getId(), "ui.ts.timesheetTimesheet.Fragments.Create", this);
@@ -81,14 +87,20 @@ sap.ui.define([
         onCancel:function(){
         	this.getDialog().close();
         },
-        onPressOk:function(){
-        	this._oRouter.navTo("detailView",{
-				weeknum : this.oWeekNum,
-				Resc : this.oResc
-			});
-        },
-        onCancelDetail:function(){
-        	this.getDetailDailog().close();
-        }             
+        onFilterWeeknumber:function(){
+        	var aFilter = [];
+        	var sQuery = this.getView().byId('input2').getValue();
+        	 if (sQuery) {
+                    var oFilter = new Filter("Weeknumber", FilterOperator.Contains, sQuery);
+                    // this.getView().byId("tabId").getBinding("items").filter([oFilter]);
+                    aFilter.push(oFilter);
+                }
+                 var oList = this.getView().byId('tabId');
+                 oList.getBinding('items').filter(aFilter);
+        }
+      
+        // onCancelDetail:function(){
+        // 	this.getDetailDailog().close();
+        // }             
 	});
 });
