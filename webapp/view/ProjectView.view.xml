@@ -15,16 +15,15 @@
    	</Bar>
    </customHeader>
    <List
-		items="{/ProjectHelpSet}" mode="SingleSelectMaster"  select="onSelectProject">
+		items="{local>/localProjectResourcesSet}" mode="SingleSelectMaster"  select="onSelectProject">
 		<CustomListItem  press="onSelectProject" type="Active">
 				<HBox>
 				<!--<CheckBox select="onSelectProject"></CheckBox>-->
 	            
 				<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
-					<Title text="{Project}" />
-					<Text text="{Name}"/>
-					<Label text="{Prjtype}"/>
-					<Label text="{Imptype}"/>
+					<Title text="{local>Project}" />
+					<Text text="{local>Name}"/>
+					<Label text="{local>Userid}"/>
 				</VBox>
 			</HBox>
 		</CustomListItem>

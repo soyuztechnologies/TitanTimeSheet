@@ -16,12 +16,12 @@ sap.ui.define([
 			this.getView().getModel('local').setProperty('/enabled',false);
 			this.getView().getModel('local').setProperty('/savevisible',false);
 			this.getView().getModel('local').setProperty('/editVisible',true);
-			var oWeeknum =  oEvent.getParameter("arguments").weeknum;
-			var oResc = oEvent.getParameter("arguments").Resc;
+			this.oWeeknum =  oEvent.getParameter("arguments").weeknum;
+			this.oResc = oEvent.getParameter("arguments").Resc;
 			
 			this.getView().getModel("layout").setProperty("/layout", "TwoColumnsMidExpanded");
-			var oFilter1 = new Filter("Resc", "EQ", oResc);
-			var oFilter2 = new Filter("Weeknumber","EQ",oWeeknum);
+			// var oFilter1 = new Filter("Resc", "EQ", oResc);
+			// var oFilter2 = new Filter("Weeknumber","EQ",oWeeknum);
 			
 			// var oList = this.getView().byId("")
 			// var oModel = this.getView().getModel();
@@ -59,6 +59,12 @@ sap.ui.define([
 		this.getView().getModel('local').setProperty('/enabled',false);
 		this.getView().getModel('local').setProperty('/savevisible',false);
 		this.getView().getModel('local').setProperty('/editVisible',true);	
+		},
+		onExit:function(){
+			this._oRouter.navTo('projectView',{
+					weeknum : this.oWeekNum,
+				     Resc : this.oResc
+			});
 		}
 		
 	});

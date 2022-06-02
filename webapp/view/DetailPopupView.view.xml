@@ -4,7 +4,7 @@
 		<headerContent>
 			<Button tooltip="Save" text="Save" type="Emphasized" visible="{local>/savevisible}" press="onPressSave"/>
 			<Button tooltip="Edit" text="Edit" type="Emphasized" visible="{local>/editVisible}" press="onPressEdit"/>
-			<Button tooltip="Exit" text="Exit" type="Emphasized"/>
+			<Button tooltip="Exit" text="Exit" type="Emphasized" press="onExit"/>
 		</headerContent>
 		<!--<f:GridList id="gridList" headerText="Week Days" items="{/RescDaySet}">-->
 		<f:GridList id="gridList" headerText="Week Days">
@@ -19,7 +19,7 @@
 						<VBox>
 							<HBox>
 								<ObjectAttribute title="Regular Pay (8 Hours)"/>
-								<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" enabled="{local>/enabled}"/>
+								<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin"/>
 							</HBox>
 							<HBox>
 								<ObjectAttribute title="Regular Pay (8 Hours)"/>
@@ -40,7 +40,7 @@
 						<Label text="{TsDate}" wrapping="true"/>
 						<HBox>
 							<ObjectAttribute title="Regular Pay (8 Hours)"/>
-							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" enabled="{local>/enabled}"/>
+							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" />
 						</HBox>
 						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
 					</VBox>
@@ -56,7 +56,7 @@
 						<Label text="{TsDate}" wrapping="true"/>
 						<HBox>
 							<ObjectAttribute title="Regular Pay (8 Hours)"/>
-							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" enabled="{local>/enabled}"/>
+							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" />
 						</HBox>
 						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
 					</VBox>
@@ -72,7 +72,7 @@
 						<Label text="{TsDate}" wrapping="true"/>
 						<HBox>
 							<ObjectAttribute title="Regular Pay (8 Hours)"/>
-							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" enabled="{local>/enabled}"/>
+							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" />
 						</HBox>
 						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
 					</VBox>
@@ -88,7 +88,7 @@
 						<Label text="{TsDate}" wrapping="true"/>
 						<HBox>
 							<ObjectAttribute title="Regular Pay (8 Hours)"/>
-							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" enabled="{local>/enabled}"/>
+							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" />
 						</HBox>
 						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
 					</VBox>
@@ -104,7 +104,7 @@
 						<Label text="{TsDate}" wrapping="true"/>
 						<HBox>
 							<ObjectAttribute title="Regular Pay (8 Hours)"/>
-							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" enabled="{local>/enabled}"/>
+							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" />
 						</HBox>
 						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
 					</VBox>
@@ -120,7 +120,7 @@
 						<Label text="{TsDate}" wrapping="true"/>
 						<HBox>
 							<ObjectAttribute title="Regular Pay (8 Hours)"/>
-							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" enabled="{local>/enabled}"/>
+							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" />
 						</HBox>
 						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
 					</VBox>
