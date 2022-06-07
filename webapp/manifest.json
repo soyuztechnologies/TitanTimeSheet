@@ -42,16 +42,16 @@
 		"supportedThemes": ["sap_hcb", "sap_belize"]
 	},
 	"sap.ui5": {
-		"services" : {
-            "ShellUIService": {
-                "lazy": false,
-                "factoryName": "sap.ushell.ui5service.ShellUIService",
-                "settings": {
-                    "setHierarchy": "auto",
-                    "setTitle": "auto"
-                }
-            }
-         },
+		"services": {
+			"ShellUIService": {
+				"lazy": false,
+				"factoryName": "sap.ushell.ui5service.ShellUIService",
+				"settings": {
+					"setHierarchy": "auto",
+					"setTitle": "auto"
+				}
+			}
+		},
 		"rootView": {
 			"viewName": "ui.ts.timesheetTimesheet.view.App",
 			"type": "XML",
@@ -70,15 +70,10 @@
 				"name": "TimeSheetList",
 				"pattern": "",
 				"target": "TimeSheetList"
-			},
-			{
-				"name": "projectView",
+			}, {
+				"name": "DetailPopupView",
 				"pattern": "details/{weeknum}/{Resc}",
-				"target": ["ProjectView"]
-			},	{
-				"name": "detailView",
-				"pattern": "details/{weeknum}/{Resc}/{project}",
-				"target": ["ProjectView","DetailPopupView"]
+				"target": ["DetailPopupView"]
 			}],
 			"targets": {
 				"TimeSheetList": {
@@ -89,15 +84,9 @@
 				},
 				"DetailPopupView": {
 					"viewLevel": 0,
-					"controlAggregation": "midColumnPages",
+					"controlAggregation": "beginColumnPages",
 					"viewId": "idDetailPopuptView",
 					"viewName": "DetailPopupView"
-				},
-				"ProjectView": {
-					"viewLevel": 0,
-					 "controlAggregation": "beginColumnPages",
-					"viewId": "idProjectView",
-					"viewName": "ProjectView"
 				}
 			}
 		},
@@ -136,7 +125,7 @@
 			},
 			"local": {
 				"type": "sap.ui.model.json.JSONModel",
-				"uri":"model/localModel.json",
+				"uri": "model/localModel.json",
 				"settings": {},
 				"preload": false
 			},

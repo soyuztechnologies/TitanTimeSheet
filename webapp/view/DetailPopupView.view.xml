@@ -2,130 +2,153 @@
 	xmlns:fb="sap.ui.comp.filterbar" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core">
 	<Page title="Detail View">
 		<headerContent>
-			<Button tooltip="Save" text="Save" type="Emphasized" visible="{local>/savevisible}" press="onPressSave"/>
-			<Button tooltip="Edit" text="Edit" type="Emphasized" visible="{local>/editVisible}" press="onPressEdit"/>
+			<Button tooltip="Save" text="Save" type="Emphasized" visible="{local>/enabled}" press="onPressSave"/>
+			<Button tooltip="Edit" text="Edit" type="Emphasized" visible="{=${local>/enabled}?false:true}" press="onPressEdit"/>
 			<Button tooltip="Exit" text="Exit" type="Emphasized" press="onExit"/>
 		</headerContent>
-		<!--<f:GridList id="gridList" headerText="Week Days" items="{/RescDaySet}">-->
-		<f:GridList id="gridList" headerText="Week Days">
-			<CustomListItem>
-				<VBox height="100%">
-					<VBox class="sapUiSmallMargin">
-						<layoutData>
-							<FlexItemData growFactor="1" shrinkFactor="0"/>
-						</layoutData>
-						<Title text="Mon" wrapping="true"/>
-						<Label text="{TsDate}" wrapping="true"/>
+		<Table  items="{local>/localProjectResourcesSet}" updateFinished="onResTableUpdate">
+			<headerToolbar>
+				<OverflowToolbar>
+					<Title text="{ path:'local>/WeekDateSet/Monday', formatter:'.formatDate'}" level="H2"/>
+					<ToolbarSpacer/>
+				</OverflowToolbar>
+			</headerToolbar>
+			<columns>
+				<Column >
+					<Text text="Project"/>
+				</Column>
+				<Column >
+					<Text text="Mon({ path:'local>/WeekDateSet/Monday', formatter:'.formatDate'})"/>
+				</Column>
+				<Column >
+					<Text text="Tue({ path:'local>/WeekDateSet/Tuesday', formatter:'.formatDate'})"/>
+				</Column>
+				<Column>
+					<Text text="Wed({ path:'local>/WeekDateSet/Wednesday', formatter:'.formatDate'})"/>
+				</Column>
+				<Column >
+					<Text text="Thu({ path:'local>/WeekDateSet/Thursday', formatter:'.formatDate'})"/>
+				</Column>
+				<Column >
+					<Text text="Fri({ path:'local>/WeekDateSet/Friday', formatter:'.formatDate'})"/>
+				</Column>
+				<Column>
+					<Text text="Sat({ path:'local>/WeekDateSet/Saturday', formatter:'.formatDate'})"/>
+				</Column>
+				<Column >
+					<Text text="Sun({ path:'local>/WeekDateSet/Sunday', formatter:'.formatDate'})"/>
+				</Column>
+				<Column >
+					<Text text="Total"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem vAlign="Middle">
+					<cells>
+						<ObjectIdentifier title="{local>Project}" text="{local>Name}"/>
 						<VBox>
-							<HBox>
-								<ObjectAttribute title="Regular Pay (8 Hours)"/>
-								<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin"/>
-							</HBox>
-							<HBox>
-								<ObjectAttribute title="Regular Pay (8 Hours)"/>
-								<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin"/>
-							</HBox>
+							<CustomListItem>
+								<VBox height="100%">
+									<VBox class="sapUiSmallMargin">
+										<layoutData>
+											<FlexItemData growFactor="1" shrinkFactor="0"/>
+										</layoutData>
+										<Title text="{local>Monday/TsHours}"  visible="{=${local>/enabled}?false:true}"/>
+										<Input value="{local>Monday/TsHours}" type="Number" maxLength="2" textAlign="Center" change="getProjectTotalHour" visible="{local>/enabled}"/>
+										<!--<Text text="{local>Name}"/>-->
+										<!--<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>-->
+									</VBox>
+								</VBox>
+							</CustomListItem>
 						</VBox>
-						<Button text="Add Time" icon="sap-icon://add" press="onAddTime" enabled="{local>/enabled}"/>
-					</VBox>
-				</VBox>
-			</CustomListItem>
-			<CustomListItem>
-				<VBox height="100%">
-					<VBox class="sapUiSmallMargin">
-						<layoutData>
-							<FlexItemData growFactor="1" shrinkFactor="0"/>
-						</layoutData>
-						<Title text="Tue" wrapping="true"/>
-						<Label text="{TsDate}" wrapping="true"/>
-						<HBox>
-							<ObjectAttribute title="Regular Pay (8 Hours)"/>
-							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" />
-						</HBox>
-						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
-					</VBox>
-				</VBox>
-			</CustomListItem>
-			<CustomListItem>
-				<VBox height="100%">
-					<VBox class="sapUiSmallMargin">
-						<layoutData>
-							<FlexItemData growFactor="1" shrinkFactor="0"/>
-						</layoutData>
-						<Title text="Wed" wrapping="true"/>
-						<Label text="{TsDate}" wrapping="true"/>
-						<HBox>
-							<ObjectAttribute title="Regular Pay (8 Hours)"/>
-							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" />
-						</HBox>
-						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
-					</VBox>
-				</VBox>
-			</CustomListItem>
-			<CustomListItem>
-				<VBox height="100%">
-					<VBox class="sapUiSmallMargin">
-						<layoutData>
-							<FlexItemData growFactor="1" shrinkFactor="0"/>
-						</layoutData>
-						<Title text="Thur" wrapping="true"/>
-						<Label text="{TsDate}" wrapping="true"/>
-						<HBox>
-							<ObjectAttribute title="Regular Pay (8 Hours)"/>
-							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" />
-						</HBox>
-						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
-					</VBox>
-				</VBox>
-			</CustomListItem>
-			<CustomListItem>
-				<VBox height="100%">
-					<VBox class="sapUiSmallMargin">
-						<layoutData>
-							<FlexItemData growFactor="1" shrinkFactor="0"/>
-						</layoutData>
-						<Title text="Fri" wrapping="true"/>
-						<Label text="{TsDate}" wrapping="true"/>
-						<HBox>
-							<ObjectAttribute title="Regular Pay (8 Hours)"/>
-							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" />
-						</HBox>
-						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
-					</VBox>
-				</VBox>
-			</CustomListItem>
-			<CustomListItem>
-				<VBox height="100%">
-					<VBox class="sapUiSmallMargin">
-						<layoutData>
-							<FlexItemData growFactor="1" shrinkFactor="0"/>
-						</layoutData>
-						<Title text="Sat" wrapping="true"/>
-						<Label text="{TsDate}" wrapping="true"/>
-						<HBox>
-							<ObjectAttribute title="Regular Pay (8 Hours)"/>
-							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" />
-						</HBox>
-						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
-					</VBox>
-				</VBox>
-			</CustomListItem>
-			<CustomListItem>
-				<VBox height="100%">
-					<VBox class="sapUiSmallMargin">
-						<layoutData>
-							<FlexItemData growFactor="1" shrinkFactor="0"/>
-						</layoutData>
-						<Title text="Sun" wrapping="true"/>
-						<Label text="{TsDate}" wrapping="true"/>
-						<HBox>
-							<ObjectAttribute title="Regular Pay (8 Hours)"/>
-							<core:Icon src='sap-icon://decline' class="sapUiTinyMarginBegin" />
-						</HBox>
-						<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>
-					</VBox>
-				</VBox>
-			</CustomListItem>
-		</f:GridList>
+						<VBox>
+							<CustomListItem>
+								<VBox height="100%">
+									<VBox class="sapUiSmallMargin">
+										<layoutData>
+											<FlexItemData growFactor="1" shrinkFactor="0"/>
+										</layoutData>
+										<Title text="{local>Tuesday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
+										<Input value="{local>Tuesday/TsHours}"  type="Number" maxLength="2" change="getProjectTotalHour" textAlign="Center" visible="{local>/enabled}"/>
+										<!--<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>-->
+									</VBox>
+								</VBox>
+							</CustomListItem>
+						</VBox>
+						<VBox>
+							<CustomListItem>
+								<VBox height="100%">
+									<VBox class="sapUiSmallMargin">
+										<layoutData>
+											<FlexItemData growFactor="1" shrinkFactor="0"/>
+										</layoutData>
+											<Title text="{local>Wednesday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
+											<Input value="{local>Wednesday/TsHours}"  type="Number" maxLength="2" change="getProjectTotalHour"  textAlign="Center" visible="{local>/enabled}"/>
+										<!--<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>-->
+									</VBox>
+								</VBox>
+							</CustomListItem>
+						</VBox>
+						<VBox>
+							<CustomListItem>
+								<VBox height="100%">
+									<VBox class="sapUiSmallMargin">
+										<layoutData>
+											<FlexItemData growFactor="1" shrinkFactor="0"/>
+										</layoutData>
+										<Title text="{local>Thursday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
+										<Input value="{local>Thursday/TsHours}"  type="Number" maxLength="2" change="getProjectTotalHour"  textAlign="Center" visible="{local>/enabled}"/>
+										<!--<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>-->
+									</VBox>
+								</VBox>
+							</CustomListItem>
+						</VBox>
+						<VBox>
+							<CustomListItem>
+								<VBox height="100%">
+									<VBox class="sapUiSmallMargin">
+										<layoutData>
+											<FlexItemData growFactor="1" shrinkFactor="0"/>
+										</layoutData>
+											<Title text="{local>Friday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
+											<Input value="{local>Friday/TsHours}"  type="Number" maxLength="2" change="getProjectTotalHour"  textAlign="Center" visible="{local>/enabled}"/>
+										<!--<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>-->
+									</VBox>
+								</VBox>
+							</CustomListItem>
+						</VBox>
+						<VBox>
+							<CustomListItem>
+								<VBox height="100%">
+									<VBox class="sapUiSmallMargin">
+										<layoutData>
+											<FlexItemData growFactor="1" shrinkFactor="0"/>
+										</layoutData>
+											<Title text="{local>Saturday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
+											<Input value="{local>Saturday/TsHours}"  type="Number"  change="getProjectTotalHour" maxLength="2" textAlign="Center" visible="{local>/enabled}"/>
+										<!--<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>-->
+									</VBox>
+								</VBox>
+							</CustomListItem>
+						</VBox>
+						<VBox>
+							<CustomListItem>
+								<VBox height="100%">
+									<VBox class="sapUiSmallMargin">
+										<layoutData>
+											<FlexItemData growFactor="1" shrinkFactor="0"/>
+										</layoutData>
+											<Title text="{local>Sunday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
+											<Input value="{local>Sunday/TsHours}"  type="Number"  change="getProjectTotalHour" maxLength="2" textAlign="Center" visible="{local>/enabled}"/>
+										<!--<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>-->
+									</VBox>
+								</VBox>
+							</CustomListItem>
+						</VBox>
+						<Text text="{local>Total}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
 	</Page>
 </mvc:View>

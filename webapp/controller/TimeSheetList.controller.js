@@ -62,7 +62,7 @@ sap.ui.define([
 			// this.getDetailDailog().open();
 			this.oWeekNum = oEvent.getSource().getProperty("text");
 		    this.oResc = oEvent.getSource().getParent().getBindingContext().getObject().Resc;	
-		    	this._oRouter.navTo("projectView",{
+		    	this._oRouter.navTo("DetailPopupView",{
 				weeknum : this.oWeekNum,
 				Resc : this.oResc
 			});
