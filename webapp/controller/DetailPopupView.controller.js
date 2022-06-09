@@ -180,6 +180,8 @@ sap.ui.define([
 				var payload;
 				for (var j = 1; j < 8; j++) {
 					var oWeekDay;
+					if (j == 1)
+						oWeekDay = 'Monday'
 					if (j == 2)
 						oWeekDay = 'Tuesday'
 					if (j == 3)
@@ -192,58 +194,68 @@ sap.ui.define([
 						oWeekDay = 'Saturday'
 					if (j == 7)
 						oWeekDay = 'Sunday'
-					if (element[oWeekDay].hasOwnProperty(prop)) {
-						payload = {
-							TsHours: element[oWeekDay].TsHours.toString()
-						};
-						this.updateResData(element.Project, oDays[oWeekDay].toISOString(), payload);
-						// break;
-						return;
-					} else {
+					// if (element[oWeekDay].hasOwnProperty(prop)) {
+					// 	// payload = {
+					// 	// 	TsHours: element[oWeekDay].TsHours.toString()
+					// 	// };
+					// 		payload = {
+					// 		"Resc": this.oResc,
+					// 		"TsDate": oDays[oWeekDay],
+					// 		"Project": "0000001",
+					// 		"Weeknumber": this.oWeeknum,
+					// 		"TsHours": element[oWeekDay].TsHours.toString()
+					// 	};
+					// 	this.updateResData(element.Project, oDays[oWeekDay].toISOString(), payload);
+					// 	// break;
+					// 	// return;
+					// } else {
 						payload = {
 							"Resc": this.oResc,
 							"TsDate": oDays[oWeekDay],
-							"Project": "0000001",
+							"Project": oData[i].Project,
 							"Weeknumber": this.oWeeknum,
 							"TsHours": element[oWeekDay].TsHours.toString()
 						};
 						this.createResData(payload);
 						// break;
-					}
+					// }
 				}
+				
+				// return;
 			}
 		},
-		updateResData: function(oProject, oDate, payload) {
-			var oModel = this.getView().getModel();
-			oDate = oDate.split(".")[0];
-			oDate = oDate.replace(":", "%3A");
-			oDate = oDate.replace(":", "%3A");
-			// var sPath = `/RescDaySet(Resc='${this.oResc}',TsDate=datetime'${oDate}',Project='${oProject}',Weeknumber='${this.oWeeknum}')`;
-			var sPath = `/RescDaySet`;
-			oModel.create(sPath, payload, {
-				success: function(oResult) {
-					debugger;
-					sap.m.MessageToast.show("Success");
-				},
-				error: function(oerr) {
-					debugger;
-					// sap.m.MessageToast.show("Error");
-					let oMsg = JSON.stringify(oerr);
-					sap.m.MessageBox.error(oMsg);
-				}
-			});
-		},
+		// updateResData: function(oProject, oDate, payload) {
+		// 	var oModel = this.getView().getModel();
+		// 	oDate = oDate.split(".")[0];
+		// 	oDate = oDate.replace(":", "%3A");
+		// 	oDate = oDate.replace(":", "%3A");
+		// 	// var sPath = `/RescDaySet(Resc='${this.oResc}',TsDate=datetime'${oDate}',Project='${oProject}',Weeknumber='${this.oWeeknum}')`;
+		// 	var sPath = `/RescDaySet`;
+		// 	oModel.create(sPath, payload, {
+		// 		success: function(oResult) {
+		// 			debugger;
+		// 			sap.m.MessageToast.show("Success");
+		// 		},
+		// 		error: function(oerr) {
+		// 			debugger;
+		// 			// sap.m.MessageToast.show("Error");
+		// 			// let oMsg = JSON.stringify(oerr);
+		// 			sap.m.MessageBox.error("Some Error Occured");
+		// 		}
+		// 	});
+		// },
 		createResData: function(payload) {
 			var oModel = this.getView().getModel();
 			var sPath = `/RescDaySet`;
+			var that=this;
 			oModel.create(sPath, payload, {
 				success: function(oResult) {
 					sap.m.MessageToast.show("Success");
-					debugger;
+					that.onExit();
 				},
 				error: function(oerr) {
-					debugger;
-					sap.m.MessageBox.error(oerr.toString());
+					
+					sap.m.MessageBox.error("Some Error Occured");
 				}
 			});
 		},
