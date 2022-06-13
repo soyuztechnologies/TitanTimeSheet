@@ -8,6 +8,23 @@ sap.ui.define([
 	return Controller.extend("ui.ts.timesheetTimesheet.controller.DetailPopupView", {
 		onInit: function() {
 			// debugger;
+				var that=this;
+				try {
+				sap.ushell.Container.getServiceAsync("UserInfo").then( // promise is returned
+					function(oService) {
+						// debugger;
+						var oUser = oService.getUser().getId();
+						that.getOwnerComponent().getModel("local").setProperty("/User", oUser);
+						// that.getOwnerComponent().getModel("local").setProperty("/User",oUser)
+					},
+					function(oError) {
+						// debugger;
+					}
+				);
+			} catch (error) {
+				sap.m.MessageToast.show("UI ushell service containter not available");
+				// that.getOwnerComponent().getModel("local").setProperty("/User","Arunk");
+			}
 			this._oRouter = this.getOwnerComponent().getRouter();
 			this._oRouter.getRoute('DetailPopupView').attachPatternMatched(this.oRouteMatched, this);
 		},
@@ -16,14 +33,23 @@ sap.ui.define([
 			this.getView().getModel("layout").setProperty("/layout", "OneColumn");
 			this.oWeeknum = oEvent.getParameter('arguments').weeknum;
 			this.oResc = oEvent.getParameter('arguments').Resc;
+			this.Status = oEvent.getParameter('arguments').Status;
 			this.getProjectResSet();
-			this.getView().getModel('local').setProperty('/enabled', false);
+			this.getView().byId("idEditButton").setVisible(true);
+			if(this.Status.includes('Submitted')||this.Status.includes('Approved')){
+				this.getView().byId("idEditButton").setVisible(false);
+			}
+			// else{
+				this.getOwnerComponent().getModel('local').setProperty('/enabled', false);
+			// }
+			
 			// this.getWeekbyWeeknum();
 			// RescDaySet(Resc='${this.oResc}',TsDate=datetime'2022-05-25T00%3A00%3A00',Project='0000001',Weeknumber='${this.oWeeknum}')
 		},
 		getProjectResSet: function() {
 			var that = this;
-			var oFilter1 = new Filter("Userid", "EQ", 'ARUNK');
+			var oUser=this.getView().getModel("local").getProperty("/User")
+			var oFilter1 = new Filter("Userid", "EQ", oUser);
 			var oModel = this.getView().getModel();
 			oModel.read("/ProjectResourcesSet", {
 				filters: [oFilter1],
@@ -167,7 +193,14 @@ sap.ui.define([
 			this.getView().getModel('local').setProperty('/savevisible', true);
 			this.getView().getModel('local').setProperty('/editVisible', false);
 		},
-		onPressSave: function() {
+		submit:false,
+		onPressSave: function(oEvent) {
+			if(oEvent.getSource().getId().includes('idSaveSubmit')){
+				this.submit=true;
+			}
+			else{
+				this.submit=false;
+			}
 			this.getView().getModel('local').setProperty('/enabled', false);
 			this.getView().getModel('local').setProperty('/savevisible', false);
 			this.getView().getModel('local').setProperty('/editVisible', true);
@@ -224,6 +257,32 @@ sap.ui.define([
 				// return;
 			}
 		},
+		upDateWeekSet:function(){
+			var that=this;
+			var oItems=this.getView().byId("idTimesheetDetailTable").getItems();
+			var total=0;
+			for(var i=0;i<oItems.length;i++){
+				var element=oItems[i];
+				total=total + parseInt(element.getCells()[element.getCells().length-1].getText())
+			}
+			var oModel=this.getView().getModel();
+			
+			var oPayload={
+				"Hrs":total.toString  (),
+				"Status":this.submit?"Submitted":"Saved"
+			};
+			var oPath=`/WeeklyTSSet(Resc='${this.oResc}',Weeknumber='${this.oWeeknum}')`;
+			oModel.update(oPath, oPayload, {
+			success: function(oResult) {
+				sap.m.MessageToast.show("Success");
+				that.onExit();
+			},
+			error: function(oerr) {
+				
+				sap.m.MessageBox.error("Some Error Occured");
+			}
+			});
+		},
 		// updateResData: function(oProject, oDate, payload) {
 		// 	var oModel = this.getView().getModel();
 		// 	oDate = oDate.split(".")[0];
@@ -251,6 +310,7 @@ sap.ui.define([
 			oModel.create(sPath, payload, {
 				success: function(oResult) {
 					sap.m.MessageToast.show("Success");
+					that.upDateWeekSet();
 					that.onExit();
 				},
 				error: function(oerr) {
@@ -260,7 +320,7 @@ sap.ui.define([
 			});
 		},
 		onExit: function() {
-			this._oRouter.navTo('projectView', {
+			this._oRouter.navTo('TimeSheetList', {
 				weeknum: this.oWeekNum,
 				Resc: this.oResc
 			});

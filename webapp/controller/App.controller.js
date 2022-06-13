@@ -10,9 +10,30 @@ sap.ui.define([
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 		 * @memberOf ui.ts.timesheetTimesheet.view.App
 		 */
-			onInit: function() {
-				// this.getOwnerComponent().getModel("layout").setProperty("/layout", "OneColumn");
+		onInit: function() {
+			// this.getOwnerComponent().getModel("layout").setProperty("/layout", "OneColumn");
+			// if(!this.getView().getModel("local").getProperty("/User")){
+			// 	this.getView().getModel("local").setProperty("/User",'ARUNK');
+			// }
+			var that=this;
+				try {
+				sap.ushell.Container.getServiceAsync("UserInfo").then( // promise is returned
+					function(oService) {
+						// debugger;
+						var oUser = oService.getUser().getId();
+						that.getOwnerComponent().getModel("local").setProperty("/User", oUser);
+						// that.getOwnerComponent().getModel("local").setProperty("/User",oUser)
+					},
+					function(oError) {
+						// debugger;
+					}
+				);
+			} catch (error) {
+				sap.m.MessageToast.show("UI ushell service containter not available");
+
 			}
+		
+		}
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

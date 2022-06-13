@@ -1,56 +1,60 @@
-<mvc:View controllerName="ui.ts.timesheetTimesheet.controller.TimeSheetList" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:fb="sap.ui.comp.filterbar"
-xmlns:uxap="sap.uxap" 
-	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+<mvc:View controllerName="ui.ts.timesheetTimesheet.controller.TimeSheetList" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:uxap="sap.uxap" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
 	<Page title="Timesheet View">
-	 <fb:FilterBar id="_IDGenFilterBar1" search="onSearch" >
-               <fb:filterGroupItems>
-	                <!--<fb:FilterGroupItem id="_IDGenFilterGroupItem1" groupName="Id1"  name="B" label="Resource" visibleInFilterBar="true" partOfCurrentVariant="true">-->
-	                <!--    <fb:control>-->
-	                <!--        <Input id="input1" type="Text" showValueHelp="true" valueHelpRequest="handleValueHelpResource" ></Input>-->
-	                <!--    </fb:control>-->
-	                <!--</fb:FilterGroupItem>-->
-	                <fb:FilterGroupItem id="_IDGenFilterGroupItem2" groupName="Id2"  name="A" label="Week" visibleInFilterBar="true" partOfCurrentVariant="true">
-	                    <fb:control>
-	                        <!--<Input id="input2" type="Text" showValueHelp="true" valueHelpRequest="handleValueHelpWeek" ></Input>-->
-	                        <Input id="input2" type="Text"  maxLength='6' liveChange="onFilterWeeknumber"></Input>
-	                    </fb:control>
-	                </fb:FilterGroupItem>
-               </fb:filterGroupItems>
-        </fb:FilterBar>
-	    	<Table items='{path:"/WeeklyTSSet"}' id="tabId">
-		    	<columns>
-	                <Column demandPopin="true" minScreenWidth="Tablet">
-	                    <Text text="Resource" />
-	                </Column>
-	                <Column demandPopin="true" minScreenWidth="Tablet" >
-	                    <Text text="Weeknum" />
-	                </Column>
-	                <Column demandPopin="true" minScreenWidth="Tablet">
-	                    <Text text="Status"/>
-	                </Column>
-	                <Column demandPopin="true" minScreenWidth="Tablet">
-	                    <Text text="Hrs"/>
-	                </Column>
-	            </columns>
-	            <items>
-			            <ColumnListItem  type="Active" >
-			                <cells>
-			                    <Text text="{Resc}"/>
-			                    <Link text="{Weeknumber}" press="onPressWeeknumber"/>
-			                    <Text text="{Status}"/> 
-			                    <Text text="{Hrs}"/>
-			                </cells>
-					     </ColumnListItem>
-		        </items>
-            </Table>
-            <footer>
-            	<Toolbar>
-	                 <ToolbarSpacer/>
-	                 <Button text="Create" press="onOpenCreatePopup"/>
-	             </Toolbar>
-            </footer>
-            	
-         
-	    
+		<fb:FilterBar id="_IDGenFilterBar1" search="onSearch">
+			<fb:filterGroupItems>
+				<!--<fb:FilterGroupItem id="_IDGenFilterGroupItem1" groupName="Id1"  name="B" label="Resource" visibleInFilterBar="true" partOfCurrentVariant="true">-->
+				<!--    <fb:control>-->
+				<!--        <Input id="input1" type="Text" showValueHelp="true" valueHelpRequest="handleValueHelpResource" ></Input>-->
+				<!--    </fb:control>-->
+				<!--</fb:FilterGroupItem>-->
+				<fb:FilterGroupItem id="_IDGenFilterGroupItem2" groupName="Id2" name="A" label="Week" visibleInFilterBar="true" partOfCurrentVariant="true">
+					<fb:control>
+						<!--<Input id="input2" type="Text" showValueHelp="true" valueHelpRequest="handleValueHelpWeek" ></Input>-->
+						<Input id="input2" type="Text" maxLength='6' liveChange="onFilterWeeknumber"></Input>
+					</fb:control>
+				</fb:FilterGroupItem>
+			</fb:filterGroupItems>
+		</fb:FilterBar>
+		<Table items='{path:"/WeeklyTSSet"}' id="tabId">
+			<headerToolbar>
+				<OverflowToolbar>
+					<Title text="" level="H2"/>
+					<ToolbarSpacer/>
+					<Button tooltip="Create" icon="sap-icon://add"  text="Create" press="onOpenCreatePopup" enabled="{editable>/editable}"/>
+		
+				</OverflowToolbar>
+			</headerToolbar>
+			<columns>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Resource"/>
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Weeknum"/>
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Status"/>
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Tablet">
+					<Text text="Hrs"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem type="Active">
+					<cells>
+						<Text text="{Resc}"/>
+						<Link text="{Weeknumber}" press="onPressWeeknumber"/>
+						<Text text="{Status}"/>
+						<Text text="{Hrs}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<!--<footer>-->
+		<!--	<Toolbar>-->
+		<!--		<ToolbarSpacer/>-->
+		<!--		<Button text="Create" press="onOpenCreatePopup"/>-->
+		<!--	</Toolbar>-->
+		<!--</footer>-->
 	</Page>
 </mvc:View>

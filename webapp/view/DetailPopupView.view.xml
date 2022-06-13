@@ -3,13 +3,16 @@
 	<Page title="Detail View">
 		<headerContent>
 			<Button tooltip="Save" text="Save" type="Emphasized" visible="{local>/enabled}" press="onPressSave"/>
-			<Button tooltip="Edit" text="Edit" type="Emphasized" visible="{=${local>/enabled}?false:true}" press="onPressEdit"/>
+				<Button id="idSaveSubmit" tooltip="Save and Submit" text="Save and Submit" visible="{local>/enabled}" type="Emphasized" press="onPressSave"/>
+			<!--<Button id="idSaveSubmit" tooltip="Save & Submit" text="Save & Submit" type="Emphasized" visible="{local>/enabled}" press="onPressSave" />-->
+			<Button id="idEditButton" tooltip="Edit" text="Edit" type="Emphasized" visible="{=${local>/enabled}?false:true}" press="onPressEdit"/>
 			<Button tooltip="Exit" text="Exit" type="Emphasized" press="onExit"/>
+		
 		</headerContent>
-		<Table  items="{local>/localProjectResourcesSet}" updateFinished="onResTableUpdate">
+		<Table id="idTimesheetDetailTable" items="{local>/localProjectResourcesSet}" updateFinished="onResTableUpdate">
 			<headerToolbar>
 				<OverflowToolbar>
-					<Title text="{ path:'local>/WeekDateSet/Monday', formatter:'.formatDate'}" level="H2"/>
+					<Title text="{local>/User} : { path:'local>/WeekDateSet/Monday', formatter:'.formatDate'}" level="H2"/>
 					<ToolbarSpacer/>
 				</OverflowToolbar>
 			</headerToolbar>
@@ -53,7 +56,7 @@
 										<layoutData>
 											<FlexItemData growFactor="1" shrinkFactor="0"/>
 										</layoutData>
-										<Title text="{local>Monday/TsHours}"  visible="{=${local>/enabled}?false:true}"/>
+										<Title text="{local>Monday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
 										<Input value="{local>Monday/TsHours}" type="Number" maxLength="2" textAlign="Center" change="getProjectTotalHour" visible="{local>/enabled}"/>
 										<!--<Text text="{local>Name}"/>-->
 										<!--<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>-->
@@ -69,7 +72,8 @@
 											<FlexItemData growFactor="1" shrinkFactor="0"/>
 										</layoutData>
 										<Title text="{local>Tuesday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
-										<Input value="{local>Tuesday/TsHours}"  type="Number" maxLength="2" change="getProjectTotalHour" textAlign="Center" visible="{local>/enabled}"/>
+										<Input value="{local>Tuesday/TsHours}" type="Number" maxLength="2" change="getProjectTotalHour" textAlign="Center"
+											visible="{local>/enabled}"/>
 										<!--<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>-->
 									</VBox>
 								</VBox>
@@ -82,8 +86,9 @@
 										<layoutData>
 											<FlexItemData growFactor="1" shrinkFactor="0"/>
 										</layoutData>
-											<Title text="{local>Wednesday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
-											<Input value="{local>Wednesday/TsHours}"  type="Number" maxLength="2" change="getProjectTotalHour"  textAlign="Center" visible="{local>/enabled}"/>
+										<Title text="{local>Wednesday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
+										<Input value="{local>Wednesday/TsHours}" type="Number" maxLength="2" change="getProjectTotalHour" textAlign="Center"
+											visible="{local>/enabled}"/>
 										<!--<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>-->
 									</VBox>
 								</VBox>
@@ -97,7 +102,8 @@
 											<FlexItemData growFactor="1" shrinkFactor="0"/>
 										</layoutData>
 										<Title text="{local>Thursday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
-										<Input value="{local>Thursday/TsHours}"  type="Number" maxLength="2" change="getProjectTotalHour"  textAlign="Center" visible="{local>/enabled}"/>
+										<Input value="{local>Thursday/TsHours}" type="Number" maxLength="2" change="getProjectTotalHour" textAlign="Center"
+											visible="{local>/enabled}"/>
 										<!--<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>-->
 									</VBox>
 								</VBox>
@@ -110,8 +116,8 @@
 										<layoutData>
 											<FlexItemData growFactor="1" shrinkFactor="0"/>
 										</layoutData>
-											<Title text="{local>Friday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
-											<Input value="{local>Friday/TsHours}"  type="Number" maxLength="2" change="getProjectTotalHour"  textAlign="Center" visible="{local>/enabled}"/>
+										<Title text="{local>Friday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
+										<Input value="{local>Friday/TsHours}" type="Number" maxLength="2" change="getProjectTotalHour" textAlign="Center" visible="{local>/enabled}"/>
 										<!--<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>-->
 									</VBox>
 								</VBox>
@@ -124,8 +130,9 @@
 										<layoutData>
 											<FlexItemData growFactor="1" shrinkFactor="0"/>
 										</layoutData>
-											<Title text="{local>Saturday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
-											<Input value="{local>Saturday/TsHours}"  type="Number"  change="getProjectTotalHour" maxLength="2" textAlign="Center" visible="{local>/enabled}"/>
+										<Title text="{local>Saturday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
+										<Input value="{local>Saturday/TsHours}" type="Number" change="getProjectTotalHour" maxLength="2" textAlign="Center"
+											visible="{local>/enabled}"/>
 										<!--<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>-->
 									</VBox>
 								</VBox>
@@ -138,8 +145,8 @@
 										<layoutData>
 											<FlexItemData growFactor="1" shrinkFactor="0"/>
 										</layoutData>
-											<Title text="{local>Sunday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
-											<Input value="{local>Sunday/TsHours}"  type="Number"  change="getProjectTotalHour" maxLength="2" textAlign="Center" visible="{local>/enabled}"/>
+										<Title text="{local>Sunday/TsHours}" visible="{=${local>/enabled}?false:true}"/>
+										<Input value="{local>Sunday/TsHours}" type="Number" change="getProjectTotalHour" maxLength="2" textAlign="Center" visible="{local>/enabled}"/>
 										<!--<Button text="Add Time" icon="sap-icon://add" enabled="{local>/enabled}"/>-->
 									</VBox>
 								</VBox>

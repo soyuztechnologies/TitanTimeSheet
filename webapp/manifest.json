@@ -39,7 +39,10 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": ["sap_hcb", "sap_belize"]
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_belize"
+		]
 	},
 	"sap.ui5": {
 		"services": {
@@ -66,15 +69,20 @@
 				"controlAggregation": "beginColumnPages",
 				"controlId": "layout"
 			},
-			"routes": [{
-				"name": "TimeSheetList",
-				"pattern": "",
-				"target": "TimeSheetList"
-			}, {
-				"name": "DetailPopupView",
-				"pattern": "details/{weeknum}/{Resc}",
-				"target": ["DetailPopupView"]
-			}],
+			"routes": [
+				{
+					"name": "TimeSheetList",
+					"pattern": "",
+					"target": "TimeSheetList"
+				},
+				{
+					"name": "DetailPopupView",
+					"pattern": "details/{weeknum}/{Resc}/{Status}",
+					"target": [
+						"DetailPopupView"
+					]
+				}
+			],
 			"targets": {
 				"TimeSheetList": {
 					"viewLevel": 0,
@@ -136,9 +144,18 @@
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"resourceRoots": {
+			"sap.ui.codetools": "sap/ui/codetools"
 		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/titan/timesht/webapp",
+		"_version": "1.1.0"
 	}
 }
