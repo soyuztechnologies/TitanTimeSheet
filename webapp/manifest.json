@@ -69,20 +69,21 @@
 				"controlAggregation": "beginColumnPages",
 				"controlId": "layout"
 			},
-			"routes": [
-				{
-					"name": "TimeSheetList",
-					"pattern": "",
-					"target": "TimeSheetList"
-				},
-				{
-					"name": "DetailPopupView",
-					"pattern": "details/{weeknum}/{Resc}/{Status}",
-					"target": [
-						"DetailPopupView"
-					]
-				}
-			],
+			"routes": [{
+				"name": "TimeSheetList",
+				"pattern": "",
+				"target": "TimeSheetList"
+			}, {
+				"name": "DetailPopupView",
+				"pattern": "details/{weeknum}/{Resc}/{Status}",
+				"target": [
+					"DetailPopupView"
+				]
+			}, {
+				"name": "Create",
+				"pattern": "Create",
+				"target": "Create"
+			}],
 			"targets": {
 				"TimeSheetList": {
 					"viewLevel": 0,
@@ -95,6 +96,12 @@
 					"controlAggregation": "beginColumnPages",
 					"viewId": "idDetailPopuptView",
 					"viewName": "DetailPopupView"
+				},
+				"Create": {
+					"viewLevel": 0,
+					"controlAggregation": "beginColumnPages",
+					"viewId": "idCreate",
+					"viewName": "Create"
 				}
 			}
 		},
@@ -144,11 +151,9 @@
 			}
 		},
 		"resources": {
-			"css": [
-				{
-					"uri": "css/style.css"
-				}
-			]
+			"css": [{
+				"uri": "css/style.css"
+			}]
 		},
 		"resourceRoots": {
 			"sap.ui.codetools": "sap/ui/codetools"

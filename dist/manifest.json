@@ -1,0 +1,161 @@
+{
+    "_version": "1.7.0",
+    "sap.app": {
+        "id": "ui.ts.timesheetTimesheet",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "sourceTemplate": {
+            "id": "servicecatalog.connectivityComponent",
+            "version": "0.0.0"
+        },
+        "dataSources": {
+            "TIMESHEET_SRV": {
+                "uri": "/sap/opu/odata/titan/TIMESHEET_SRV/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        },
+        "supportedThemes": [
+            "sap_hcb",
+            "sap_belize"
+        ]
+    },
+    "sap.ui5": {
+        "services": {
+            "ShellUIService": {
+                "lazy": false,
+                "factoryName": "sap.ushell.ui5service.ShellUIService",
+                "settings": {
+                    "setHierarchy": "auto",
+                    "setTitle": "auto"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "ui.ts.timesheetTimesheet.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.f.routing.Router",
+                "viewType": "XML",
+                "viewPath": "ui.ts.timesheetTimesheet.view",
+                "controlAggregation": "beginColumnPages",
+                "controlId": "layout"
+            },
+            "routes": [
+                {
+                    "name": "TimeSheetList",
+                    "pattern": "",
+                    "target": "TimeSheetList"
+                },
+                {
+                    "name": "DetailPopupView",
+                    "pattern": "details/{weeknum}/{Resc}/{Status}",
+                    "target": [
+                        "DetailPopupView"
+                    ]
+                }
+            ],
+            "targets": {
+                "TimeSheetList": {
+                    "viewLevel": 0,
+                    "controlAggregation": "beginColumnPages",
+                    "viewId": "idTimeSheetView",
+                    "viewName": "TimeSheetList"
+                },
+                "DetailPopupView": {
+                    "viewLevel": 0,
+                    "controlAggregation": "beginColumnPages",
+                    "viewId": "idDetailPopuptView",
+                    "viewName": "DetailPopupView"
+                }
+            }
+        },
+        "dependencies": {
+            "minUI5Version": "1.30.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+                "sap.ui.layout": {},
+                "sap.ushell": {},
+                "sap.collaboration": {},
+                "sap.ui.comp": {},
+                "sap.uxap": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "ui.ts.timesheetTimesheet.i18n.i18n"
+                }
+            },
+            "": {
+                "type": "sap.ui.model.odata.v2.ODataModel",
+                "settings": {
+                    "defaultOperationMode": "Server",
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Request"
+                },
+                "dataSource": "TIMESHEET_SRV",
+                "preload": true
+            },
+            "local": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "model/localModel.json",
+                "settings": {},
+                "preload": false
+            },
+            "layout": {
+                "type": "sap.ui.model.json.JSONModel",
+                "settings": {},
+                "preload": true
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "resourceRoots": {
+            "sap.ui.codetools": "sap/ui/codetools"
+        }
+    },
+    "sap.platform.abap": {
+        "uri": "/sap/bc/ui5_ui5/titan/timesht",
+        "_version": "1.1.0"
+    }
+}

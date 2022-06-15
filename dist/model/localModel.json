@@ -1,0 +1,25 @@
+{
+	"WeeklyTSSet":[{
+		"Hrs":"2",
+		"Resc":"Resource1",
+		"Approver":"",
+		"Weeknumber":"000006",
+		"Status":"Open"
+	},
+	{
+		"Hrs":"3",
+		"Resc":"Resource2",
+		"Approver":"",
+		"Weeknumber":"000008",
+		"Status":"Submitted"
+	}],
+	"RescDaySet":[
+		{
+			 "Resc":"Resource1",
+             "TsDate":"3/12/2022",
+             "Project" :"Project1",
+             "Weeknumber":"000006",
+             "TsHours":"3"
+		}
+		]
+}

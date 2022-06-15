@@ -1,0 +1,60 @@
+{
+    "resources": [
+        {
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "view/TimeSheetList.view.xml"
+        },
+        {
+            "name": "view/App.view.xml"
+        },
+        {
+            "name": "view/DetailPopupView.view.xml"
+        },
+        {
+            "name": "css/style.css"
+        },
+        {
+            "name": "controller/TimeSheetList.controller.js"
+        },
+        {
+            "name": "controller/App.controller.js"
+        },
+        {
+            "name": "controller/DetailPopupView.controller.js"
+        },
+        {
+            "name": "index.html"
+        },
+        {
+            "name": "localService/metadata.xml"
+        },
+        {
+            "name": "Fragments/AddHours.fragment.xml"
+        },
+        {
+            "name": "Fragments/Create.fragment.xml"
+        },
+        {
+            "name": "manifest.json"
+        },
+        {
+            "name": "Component.js"
+        },
+        {
+            "name": "model/models.js"
+        },
+        {
+            "name": "model/localModel.json"
+        },
+        {
+            "name": "Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "neo-app.json"
+        }
+    ]
+}

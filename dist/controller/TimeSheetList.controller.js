@@ -24,7 +24,7 @@ sap.ui.define([
 				);
 			} catch (error) {
 				sap.m.MessageToast.show("UI ushell service containter not available");
-				that.getOwnerComponent().getModel("local").setProperty("/User", "ARUNK");
+				// that.getOwnerComponent().getModel("local").setProperty("/User","Arunk");
 
 			}
 			this._oRouter = this.getOwnerComponent().getRouter();
@@ -32,10 +32,12 @@ sap.ui.define([
 		},
 		oRouteMatched: function() {
 			// debugger;
+			// var oUserDetails = await this.getUserInfo();
 			this.getView().getModel("layout").setProperty("/layout", "OneColumn");
 			this.oResc = this.getOwnerComponent().getModel("local").getProperty("/User");
 			var oFilter = new Filter("Resc", "EQ", this.oResc);
 			this.getView().byId("tabId").getBinding("items").filter([oFilter]);
+
 		},
 		// getUserInfo: function() {
 		//              var that = this
@@ -54,6 +56,8 @@ sap.ui.define([
 		//              }
 		//          },
 		onWeekCreate: function(oEvent) {
+			debugger;
+
 			var oWeek = oEvent.getSource().getParent().getContent()[0].getContent()[1].getValue();
 			var oPayload = {
 				"Resc": this.oResc,
@@ -105,8 +109,7 @@ sap.ui.define([
 			return this.oCreateDialog;
 		},
 		onOpenCreatePopup: function() {
-			this._oRouter.navTo("Create", {});
-			// this.getDialog().open();
+			this.getDialog().open();
 		},
 		onCancel: function() {
 			this.getDialog().close();

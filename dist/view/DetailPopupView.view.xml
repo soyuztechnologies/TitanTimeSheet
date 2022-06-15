@@ -3,10 +3,11 @@
 	<Page title="Detail View">
 		<headerContent>
 			<Button tooltip="Save" text="Save" type="Emphasized" visible="{local>/enabled}" press="onPressSave"/>
-			<Button id="idSaveSubmit" tooltip="Save and Submit" text="Save and Submit" visible="{local>/enabled}" type="Emphasized" press="onPressSave"/>
+				<Button id="idSaveSubmit" tooltip="Save and Submit" text="Save and Submit" visible="{local>/enabled}" type="Emphasized" press="onPressSave"/>
 			<!--<Button id="idSaveSubmit" tooltip="Save & Submit" text="Save & Submit" type="Emphasized" visible="{local>/enabled}" press="onPressSave" />-->
 			<Button id="idEditButton" tooltip="Edit" text="Edit" type="Emphasized" visible="{=${local>/enabled}?false:true}" press="onPressEdit"/>
 			<Button tooltip="Exit" text="Exit" type="Emphasized" press="onExit"/>
+		
 		</headerContent>
 		<Table id="idTimesheetDetailTable" items="{local>/localProjectResourcesSet}" updateFinished="onResTableUpdate">
 			<headerToolbar>

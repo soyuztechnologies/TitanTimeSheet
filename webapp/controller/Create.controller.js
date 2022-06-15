@@ -1,11 +1,12 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/Filter",
-	'sap/ui/model/FilterOperator'
-], function(Controller, Filter, FilterOperator) {
+	'sap/ui/model/FilterOperator',
+	'sap/m/MessageBox'
+], function(Controller, Filter, FilterOperator,MessageBox) {
 	"use strict";
 
-	return Controller.extend("ui.ts.timesheetTimesheet.controller.DetailPopupView", {
+	return Controller.extend("ui.ts.timesheetTimesheet.controller.Create", {
 		onInit: function() {
 			// debugger;
 				var that=this;
@@ -26,25 +27,18 @@ sap.ui.define([
 				that.getOwnerComponent().getModel("local").setProperty("/User","ARUNK");
 			}
 			this._oRouter = this.getOwnerComponent().getRouter();
-			this._oRouter.getRoute('DetailPopupView').attachPatternMatched(this.oRouteMatched, this);
+			this._oRouter.getRoute('Create').attachPatternMatched(this.oRouteMatched, this);
 		},
 		oRouteMatched: function(oEvent) {
 			debugger;
+			this.getView().getModel('local').setProperty('/localProjectResourcesSet', undefined);
 			this.getView().getModel("layout").setProperty("/layout", "OneColumn");
-			this.oWeeknum = oEvent.getParameter('arguments').weeknum;
-			this.oResc = oEvent.getParameter('arguments').Resc;
-			this.Status = oEvent.getParameter('arguments').Status;
-			this.getProjectResSet();
-			this.getView().byId("idEditButton").setVisible(true);
-			if(this.Status.includes('Submitted')||this.Status.includes('Approved')){
-				this.getView().byId("idEditButton").setVisible(false);
-			}
-			// else{
-				this.getOwnerComponent().getModel('local').setProperty('/enabled', false);
-			// }
-			
-			// this.getWeekbyWeeknum();
-			// RescDaySet(Resc='${this.oResc}',TsDate=datetime'2022-05-25T00%3A00%3A00',Project='0000001',Weeknumber='${this.oWeeknum}')
+			this.oResc = this.getOwnerComponent().getModel("local").getProperty("/User");
+			this.getOwnerComponent().getModel('local').setProperty('/enabled', false);
+			this.getView().getModel('local').setProperty('/localProjectResourcesSet', []);
+			var oDate=new Date();
+			this.getView().byId("idCreateDatePicker").setDateValue(oDate);
+			this.getView().byId("idCreateDatePicker").fireChange();
 		},
 		getProjectResSet: function() {
 			var that = this;
@@ -56,34 +50,65 @@ sap.ui.define([
 				success: function(data) {
 					// debugger;
 					that.getView().getModel('local').setProperty('/localProjectResourcesSet', data.results);
-					that.getWeekbyWeeknum();
+						for (var i = 0; i < data.results.length; i++) {
+						var element = data.results[i];
+						for (var j = 1; j < 8; j++) {
+							that.getDayDate(j, element.Project, j);
+						}
+					}
+					// that.getWeekbyWeeknum();
 				},
 				error: function(oErr) {
 
 				}
 			});
 		},
-		getWeekbyWeeknum: function() {
+		onDateChange:function(oEvent){
+			debugger;	
+			this.getView().getModel('local').setProperty('/localProjectResourcesSet', []);
+			this.getView().getModel('local').updateBindings();
+			this.getWeekbyWeeknum(oEvent.getSource().getDateValue());
+		
+		},
+		getWeekbyWeeknum: function(oDate) {
 			var that = this;
-			var oFilter1 = new Filter("Week", "EQ", this.oWeeknum);
+			// var oFilter1 = new Filter("Week", "EQ", this.oWeeknum);
 			var oModel = this.getView().getModel();
-			oModel.read("/WeekDateSet", {
-				filters: [oFilter1],
+			oModel.read("/WeekDateSet(InitDate=datetime'"+ oDate.toISOString().split(".")[0].replaceAll(':', '%3A')+"')", {
+				// filters: [oFilter1],
 				success: function(data) {
 					debugger;
-					that.getView().getModel('local').setProperty('/WeekDateSet', data.results[0]);
-					var oProjects = that.getView().getModel('local').getProperty('/localProjectResourcesSet');
-					var oDays = that.getView().getModel('local').getProperty('/WeekDateSet')
+					that.oWeeknum=data.Week;
+					// that.getProjectResSet();
+					that.validateWeek();
+					that.getView().getModel('local').setProperty('/WeekDateSet', data);
+					// var oProjects = that.getView().getModel('local').getProperty('/localProjectResourcesSet');
+					// var oDays = that.getView().getModel('local').getProperty('/WeekDateSet')
 						// delete oDays.__metadata;
-					for (var i = 0; i < oProjects.length; i++) {
-						var element = oProjects[i];
-						for (var j = 1; j < 8; j++) {
-							that.getDayDate(j, element.Project, j);
-						}
-					}
+				
 				},
 				error: function(oErr) {
 
+				}
+			});
+		},
+		validateWeek:function(){
+			var oModel=this.getView().getModel();
+			var that=this;
+			var oFilter1 = new Filter("Weeknumber", "EQ", this.oWeeknum);
+			oModel.read("/WeeklyTSSet", {
+				filters: [oFilter1],
+				success: function(data) {
+					debugger;
+					if(data.results.length===0){
+						that.getProjectResSet();
+					}
+					else{
+						MessageBox.error("Week Already Exits.");
+					}
+				},
+				error: function(oErr) {
+					debugger;
 				}
 			});
 		},
@@ -117,10 +142,11 @@ sap.ui.define([
 		},
 		getProjectResDaySet: function(oDay, Project, aDay, count) {
 			var that = this;
+			var oResc=this.getOwnerComponent().getModel("local").getProperty("/User");
 			var oFilter1 = new Filter("Weeknumber", "EQ", this.oWeeknum);
 			var oFilter2 = new Filter("Project", "EQ", Project);
 			var oFilter3 = new Filter("TsDate", "EQ", oDay);
-			var oFilter4 = new Filter("Resc", "EQ", this.oResc);
+			var oFilter4 = new Filter("Resc", "EQ", oResc);
 			var oModel = this.getView().getModel();
 			oModel.read("/RescDaySet", {
 				filters: [oFilter1, oFilter2, oFilter3, oFilter4],
@@ -178,16 +204,16 @@ sap.ui.define([
 				return oFormat.format(oDate);
 			}
 		},
-		onAddTime: function() {
-			if (!this.oAddHours) {
-				this.oAddHours = sap.ui.xmlfragment(this.getView().getId(), "ui.ts.timesheetTimesheet.Fragments.AddHours", this);
-				this.getView().addDependent(this.oAddHours);
-			}
-			this.oAddHours.open();
-		},
-		onPressOkAddHours: function() {
-			this.oAddHours.close();
-		},
+		// onAddTime: function() {
+		// 	if (!this.oAddHours) {
+		// 		this.oAddHours = sap.ui.xmlfragment(this.getView().getId(), "ui.ts.timesheetTimesheet.Fragments.AddHours", this);
+		// 		this.getView().addDependent(this.oAddHours);
+		// 	}
+		// 	this.oAddHours.open();
+		// },
+		// onPressOkAddHours: function() {
+		// 	this.oAddHours.close();
+		// },
 		onPressEdit: function() {
 			this.getView().getModel('local').setProperty('/enabled', true);
 			this.getView().getModel('local').setProperty('/savevisible', true);
@@ -195,71 +221,70 @@ sap.ui.define([
 		},
 		submit:false,
 		onPressSave: function(oEvent) {
-			if(oEvent.getSource().getId().includes('idSaveSubmit')){
-				this.submit=true;
-			}
-			else{
-				this.submit=false;
-			}
-			this.getView().getModel('local').setProperty('/enabled', false);
-			this.getView().getModel('local').setProperty('/savevisible', false);
-			this.getView().getModel('local').setProperty('/editVisible', true);
+			// if(oEvent.getSource().getId().includes('idSaveSubmit')){
+			// 	this.submit=true;
+			// }
+			// else{
+			// 	this.submit=false;
+			// }
+			// this.getView().getModel('local').setProperty('/enabled', false);
+			// this.getView().getModel('local').setProperty('/savevisible', false);
+			// this.getView().getModel('local').setProperty('/editVisible', true);
 			var oData = this.getView().getModel('local').getProperty('/localProjectResourcesSet');
 			var oDays = this.getView().getModel('local').getProperty('/WeekDateSet');
-			for (var i = 0; i < oData.length; i++) {
-				debugger;
-				var element = oData[i];
-				var prop = '__metadata';
-				var payload;
-				for (var j = 1; j < 8; j++) {
-					var oWeekDay;
-					if (j == 1)
-						oWeekDay = 'Monday'
-					if (j == 2)
-						oWeekDay = 'Tuesday'
-					if (j == 3)
-						oWeekDay = 'Wednesday'
-					if (j == 4)
-						oWeekDay = 'Thursday'
-					if (j == 5)
-						oWeekDay = 'Friday'
-					if (j == 6)
-						oWeekDay = 'Saturday'
-					if (j == 7)
-						oWeekDay = 'Sunday'
-					// if (element[oWeekDay].hasOwnProperty(prop)) {
-					// 	// payload = {
-					// 	// 	TsHours: element[oWeekDay].TsHours.toString()
-					// 	// };
-					// 		payload = {
-					// 		"Resc": this.oResc,
-					// 		"TsDate": oDays[oWeekDay],
-					// 		"Project": "0000001",
-					// 		"Weeknumber": this.oWeeknum,
-					// 		"TsHours": element[oWeekDay].TsHours.toString()
-					// 	};
-					// 	this.updateResData(element.Project, oDays[oWeekDay].toISOString(), payload);
-					// 	// break;
-					// 	// return;
-					// } else {
-						payload = {
-							"Resc": this.oResc,
-							"TsDate": oDays[oWeekDay],
-							"Project": oData[i].Project,
-							"Weeknumber": this.oWeeknum,
-							"TsHours": element[oWeekDay].TsHours.toString()
-						};
-						this.createResData(payload);
-						// break;
-					// }
+			var oModel=this.getView().getModel();
+			var that=this;
+			var oWeekPayload={
+				"Hrs": "00",
+				"Resc": that.oResc,
+				"Weeknumber": that.oWeeknum,
+				"Status": "Saved"
+			};
+			oModel.create("/WeeklyTSSet", oWeekPayload,{
+				success: function(data) {
+					debugger;
+					for (var i = 0; i < oData.length; i++) {
+						debugger;
+						var element = oData[i];
+						var prop = '__metadata';
+						var payload;
+						for (var j = 1; j < 8; j++) {
+							var oWeekDay;
+							if (j == 1)
+								oWeekDay = 'Monday'
+							if (j == 2)
+								oWeekDay = 'Tuesday'
+							if (j == 3)
+								oWeekDay = 'Wednesday'
+							if (j == 4)
+								oWeekDay = 'Thursday'
+							if (j == 5)
+								oWeekDay = 'Friday'
+							if (j == 6)
+								oWeekDay = 'Saturday'
+							if (j == 7)
+								oWeekDay = 'Sunday'
+							payload = {
+								"Resc": that.oResc,
+								"TsDate": oDays[oWeekDay],
+								"Project": oData[i].Project,
+								"Weeknumber": that.oWeeknum,
+								"TsHours": element[oWeekDay].TsHours.toString()
+							};
+							that.createResData(payload);
+						}
+					}
+				},
+				error: function(oErr) {
+					debugger;
+					sap.m.MessageToast.show("Some Error Occured");
 				}
-				
-				// return;
-			}
+			});
+			
 		},
 		upDateWeekSet:function(){
 			var that=this;
-			var oItems=this.getView().byId("idTimesheetDetailTable").getItems();
+			var oItems=this.getView().byId("idTimesheetDetailTableCreate").getItems();
 			var total=0;
 			for(var i=0;i<oItems.length;i++){
 				var element=oItems[i];
@@ -268,8 +293,8 @@ sap.ui.define([
 			var oModel=this.getView().getModel();
 			
 			var oPayload={
-				"Hrs":total.toString  (),
-				"Status":this.submit?"Submitted":"Saved"
+				"Hrs":total.toString(),
+				"Status":"Saved"
 			};
 			var oPath=`/WeeklyTSSet(Resc='${this.oResc}',Weeknumber='${this.oWeeknum}')`;
 			oModel.update(oPath, oPayload, {
