@@ -44,7 +44,7 @@
 					<cells>
 						<Text text="{Resc}"/>
 						<Link text="{Weeknumber}" press="onPressWeeknumber"/>
-						<Text text="{Status}"/>
+						<ObjectStatus text="{Status}" state="{path:'Status',formatter:'.FormatStatus'}"/>
 						<Text text="{Hrs}"/>
 					</cells>
 				</ColumnListItem>

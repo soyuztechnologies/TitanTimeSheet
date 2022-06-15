@@ -24,7 +24,7 @@ sap.ui.define([
 				);
 			} catch (error) {
 				sap.m.MessageToast.show("UI ushell service containter not available");
-				that.getOwnerComponent().getModel("local").setProperty("/User","ARUNK");
+				// that.getOwnerComponent().getModel("local").setProperty("/User","ARUNK");
 			}
 			this._oRouter = this.getOwnerComponent().getRouter();
 			this._oRouter.getRoute('Create').attachPatternMatched(this.oRouteMatched, this);

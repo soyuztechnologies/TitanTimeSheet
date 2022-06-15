@@ -24,7 +24,7 @@ sap.ui.define([
 				);
 			} catch (error) {
 				sap.m.MessageToast.show("UI ushell service containter not available");
-				that.getOwnerComponent().getModel("local").setProperty("/User", "ARUNK");
+				// that.getOwnerComponent().getModel("local").setProperty("/User", "ARUNK");
 
 			}
 			this._oRouter = this.getOwnerComponent().getRouter();
@@ -123,6 +123,23 @@ sap.ui.define([
 			}
 			var oList = this.getView().byId('tabId');
 			oList.getBinding('items').filter(aFilter);
+		},
+		FormatStatus:function(oStatus){
+			if(oStatus){
+				if(oStatus.toUpperCase().includes('APPROVE')){
+					return 'Success';
+				}
+				if(oStatus.toUpperCase().includes('REJECT')){
+					return 'Error';
+				}
+				if(oStatus.toUpperCase().includes('SUBMITTED')){
+					return 'Warning';
+				}
+				if(oStatus.toUpperCase().includes('SAVED')){
+					return 'Information';
+				}
+			}
+			return 'None';
 		}
 
 		// onCancelDetail:function(){

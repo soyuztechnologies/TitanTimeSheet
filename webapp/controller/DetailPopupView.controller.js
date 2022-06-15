@@ -23,7 +23,7 @@ sap.ui.define([
 				);
 			} catch (error) {
 				sap.m.MessageToast.show("UI ushell service containter not available");
-				that.getOwnerComponent().getModel("local").setProperty("/User","ARUNK");
+				// that.getOwnerComponent().getModel("local").setProperty("/User","ARUNK");
 			}
 			this._oRouter = this.getOwnerComponent().getRouter();
 			this._oRouter.getRoute('DetailPopupView').attachPatternMatched(this.oRouteMatched, this);
@@ -36,7 +36,7 @@ sap.ui.define([
 			this.Status = oEvent.getParameter('arguments').Status;
 			this.getProjectResSet();
 			this.getView().byId("idEditButton").setVisible(true);
-			if(this.Status.includes('Submitted')||this.Status.includes('Approved')){
+			if(this.Status.toUpperCase().includes('SUBMITTED')||this.Status.toUpperCase().includes('APPROVE')){
 				this.getView().byId("idEditButton").setVisible(false);
 			}
 			// else{
@@ -269,7 +269,7 @@ sap.ui.define([
 			
 			var oPayload={
 				"Hrs":total.toString  (),
-				"Status":this.submit?"Submitted":"Saved"
+				"Status":this.submit?"SUBMITTED":"SAVED"
 			};
 			var oPath=`/WeeklyTSSet(Resc='${this.oResc}',Weeknumber='${this.oWeeknum}')`;
 			oModel.update(oPath, oPayload, {
